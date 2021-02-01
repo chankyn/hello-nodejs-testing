@@ -7,9 +7,7 @@ pipeline {
         
         stage('Build') {
             steps {
-                withGradle {
-                    sh 'yarn'
-                }
+                sh 'yarn'
             }
         }
         stage('Test') {

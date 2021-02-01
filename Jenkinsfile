@@ -2,7 +2,9 @@
 
 pipeline {
     agent any
-  
+    tools {
+        nodejs "NodeJS 15.7.0"
+    }
     stages {
         
         stage('Build') {
@@ -13,6 +15,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'yarn run test'
+                sh 'yarn run ci-test'
             }
         }
     }

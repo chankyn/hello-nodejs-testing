@@ -33,13 +33,14 @@ pipeline {
                 }
             }
         }
-        stage('Trivy') {
+        stage('Security') {
             steps {
-                sh 'trivy filesystem --format json --output trivy-results.json .'
+                sh 'trivy filesystem -f json -o trivy-fs.json .'
+                sh 'trivy image -f json -o trivy-image.json hello-brunch'
             }
             post {
                 always {
-                    recordIssues(tools: [trivy(pattern: 'trivy-results.json')])
+                    recordIssues enabledForFailure: true, aggregatingResults:true, tool: trivy(pattern: 'trivy*.json')
                 }
             }
         }
